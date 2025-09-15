@@ -199,7 +199,7 @@ func (dataChannel *DataChannel) SetWebsocket(log log.T, channelUrl string, chann
 
 // FinalizeHandshake sends the token for service to acknowledge the connection.
 func (dataChannel *DataChannel) FinalizeDataChannelHandshake(log log.T, tokenValue string) (err error) {
-	uuid.SwitchFormat(uuid.CleanHyphen)
+	uuid.SwitchFormat(uuid.FormatCanonical)
 	uid := uuid.NewV4().String()
 
 	log.Infof("Sending token through data channel %s to acknowledge connection", dataChannel.wsChannel.GetStreamUrl())
@@ -299,7 +299,7 @@ func (dataChannel *DataChannel) SendInputDataMessage(
 		SchemaVersion:  1,
 		CreatedDate:    uint64(time.Now().UnixNano() / 1000000),
 		Flags:          flag,
-		MessageId:      messageId,
+		MessageId:      &messageId,
 		PayloadType:    uint32(payloadType),
 		Payload:        inputData,
 		SequenceNumber: dataChannel.StreamDataSequenceNumber,

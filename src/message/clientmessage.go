@@ -119,7 +119,7 @@ type ClientMessage struct {
 	CreatedDate    uint64
 	SequenceNumber int64
 	Flags          uint64
-	MessageId      uuid.UUID
+	MessageId      *uuid.UUID
 	PayloadDigest  []byte
 	PayloadType    uint32
 	PayloadLength  uint32

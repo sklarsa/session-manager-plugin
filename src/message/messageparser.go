@@ -163,7 +163,7 @@ func bytesToLong(log log.T, input []byte) (result int64, err error) {
 }
 
 // getUuid gets the 128bit uuid from an array of bytes starting from the offset.
-func getUuid(log log.T, byteArray []byte, offset int) (result uuid.UUID, err error) {
+func getUuid(log log.T, byteArray []byte, offset int) (result *uuid.UUID, err error) {
 	byteArrayLength := len(byteArray)
 	if offset > byteArrayLength-1 || offset+16-1 > byteArrayLength-1 || offset < 0 {
 		log.Error("getUuid failed: Offset is invalid.")
@@ -195,8 +195,8 @@ func getUuid(log log.T, byteArray []byte, offset int) (result uuid.UUID, err err
 	}
 
 	uuidBytes := append(mostSignificantBytes, leastSignificantBytes...)
-
-	return uuid.New(uuidBytes), nil
+	uuid := uuid.New(uuidBytes)
+	return &uuid, nil
 }
 
 // longToBytes gets bytes array from a long integer.
@@ -413,10 +413,10 @@ func putBytes(log log.T, byteArray []byte, offsetStart int, offsetEnd int, input
 }
 
 // putUuid puts the 128 bit uuid to an array of bytes starting from the offset.
-func putUuid(log log.T, byteArray []byte, offset int, input uuid.UUID) (err error) {
+func putUuid(log log.T, byteArray []byte, offset int, input *uuid.UUID) (err error) {
 	if input == nil {
-		log.Error("putUuid failed: input is null.")
-		return errors.New("putUuid failed: input is null.")
+		log.Error("putUuid failed: input is nil.")
+		return errors.New("putUuid failed: input is nil.")
 	}
 
 	byteArrayLength := len(byteArray)
@@ -494,7 +494,7 @@ func SerializeClientMessageWithAcknowledgeContent(log log.T, acknowledgeContent 
 		return
 	}
 
-	uuid.SwitchFormat(uuid.CleanHyphen)
+	uuid.SwitchFormat(uuid.FormatCanonical)
 	messageId := uuid.NewV4()
 	clientMessage := ClientMessage{
 		MessageType:    AcknowledgeMessage,
@@ -502,7 +502,7 @@ func SerializeClientMessageWithAcknowledgeContent(log log.T, acknowledgeContent 
 		CreatedDate:    uint64(time.Now().UnixNano() / 1000000),
 		SequenceNumber: 0,
 		Flags:          3,
-		MessageId:      messageId,
+		MessageId:      &messageId,
 		Payload:        acknowledgeContentBytes,
 	}
 
