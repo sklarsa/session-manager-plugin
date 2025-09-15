@@ -4,7 +4,6 @@ go 1.25.1
 
 require (
 	github.com/aws/aws-sdk-go v1.55.8
-	github.com/aws/session-manager-plugin v0.0.0-20250205214155-b2b0bcd769d1
 	github.com/cihub/seelog v0.0.0-20170130134532-f561c5e57575
 	github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203
 	github.com/fsnotify/fsnotify v1.9.0

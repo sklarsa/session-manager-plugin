@@ -23,8 +23,8 @@ import (
 	"net"
 	"os"
 
-	"github.com/aws/session-manager-plugin/src/log"
-	"github.com/aws/session-manager-plugin/src/message"
+	"github.com/sklarsa/session-manager-plugin/src/log"
+	"github.com/sklarsa/session-manager-plugin/src/message"
 )
 
 type DisplayMode struct {

@@ -19,10 +19,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/aws/session-manager-plugin/src/config"
-	"github.com/aws/session-manager-plugin/src/log"
-	"github.com/aws/session-manager-plugin/src/websocketutil"
 	"github.com/gorilla/websocket"
+	"github.com/sklarsa/session-manager-plugin/src/config"
+	"github.com/sklarsa/session-manager-plugin/src/log"
+	"github.com/sklarsa/session-manager-plugin/src/websocketutil"
 )
 
 // IWebSocketChannel is the interface for DataChannel.
